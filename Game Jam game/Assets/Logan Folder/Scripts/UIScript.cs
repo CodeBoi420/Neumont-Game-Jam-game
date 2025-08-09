@@ -11,6 +11,8 @@ public class UIScript : MonoBehaviour
     {
         // Limits fps to 60
         Application.targetFrameRate = 60;
+
+        if (pauseMenu) pauseMenu.SetActive(false);
     }
 
     void Update()
@@ -19,10 +21,17 @@ public class UIScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (!isPaused) { Time.timeScale = 0; pauseMenu.SetActive(true); }
-                if (isPaused) { Time.timeScale = 1; pauseMenu.SetActive(false); }
+                if (!isPaused) { Time.timeScale = 0; pauseMenu.SetActive(true); isPaused = true;  }
+                else if (isPaused) { Time.timeScale = 1; pauseMenu.SetActive(false); isPaused = false; }
             }
         }
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        isPaused = false;
     }
 
     public void MainMenu()
